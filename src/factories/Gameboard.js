@@ -43,7 +43,7 @@ const gameboard = () => {
   };
 
   const receiveAttack = (x, y) => {
-    
+
     if (board[y][x]) {
       let ship = board[y][x][0];
       let shipLocation = board[y][x][1];
