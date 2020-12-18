@@ -2,7 +2,7 @@ import playerFactory from '../Player';
 
 test('computerPlay() to return 2 coordanates on the board', () => {
   const bill = playerFactory();
-  const move = bill.computerPlay().split(',');
+  const move = bill.computerPlay();
   expect(Number(move[0])).toBeLessThan(10);
   expect(Number(move[0])).toBeGreaterThan(-1)
   expect(Number(move[1])).toBeLessThan(11);
@@ -11,13 +11,17 @@ test('computerPlay() to return 2 coordanates on the board', () => {
 
 test('computerPlay() adds move to list of played moves', () => {
   const bill = playerFactory();
-  const move = bill.computerPlay();
+  let tempMove = bill.computerPlay();
+  const move = `${tempMove[0]},${tempMove[1]}`
+  
 
   expect(bill.playedMoves.includes(move)).toBeTruthy();
 
-  const move2 = bill.computerPlay();
+  tempMove = bill.computerPlay();
+  const move2 = `${tempMove[0]},${tempMove[1]}`
   expect(bill.playedMoves.includes(move2)).toBeTruthy();
 
-  const move3 = bill.computerPlay();
+  tempMove = bill.computerPlay();
+  const move3 = `${tempMove[0]},${tempMove[1]}`
   expect(bill.playedMoves.includes(move3)).toBeTruthy();
 });

@@ -9,7 +9,7 @@ const playerFactory = () => {
       computerPlay();
     };
     moves.push(`${xCoord},${yCoord}`)
-    return `${xCoord},${yCoord}`
+    return [xCoord, yCoord]
   }
 
   return {
