@@ -8,7 +8,6 @@ const playerFactory = () => {
     // don't allow same move twice;
     if (moves.includes(`${xCoord},${yCoord}`)) {
       move = computerPlay();
-      console.log('repeat')
     };
     moves.push(`${move[0]},${move[1]}`);
     return move;
