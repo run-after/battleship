@@ -20,6 +20,10 @@ main {
   justify-content: space-around;
 }
 
+.disable-clicks {
+  pointer-events: none;
+}
+
 .row {
   display: flex;
 }
@@ -33,6 +37,23 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.hit {
+  background: red;
+  border-radius: 100%;
+  height: 50%;
+  width: 50%;
+  animation: hit 0.5s;
+}
+
+@keyframes hit {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(4);
+  }
 }
 
 @media (max-width: 1350px) {
