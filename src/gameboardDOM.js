@@ -1,4 +1,4 @@
-const gameboardDOM = (compBoard, playerBoard, playRound, isGameOver) => {
+const gameboardDOM = (compBoard, playerBoard, player, playRound, isGameOver) => {
   
   const boardSetup = (board, boardDOM) => {
     // loop through whole array
@@ -15,7 +15,7 @@ const gameboardDOM = (compBoard, playerBoard, playRound, isGameOver) => {
         space.setAttribute('data-coord', `${i},${key}`);
         // Show players ships
         if (boardDOM === playerBoardDOM && x) {
-          space.style.background = 'yellow'
+          space.style.background = 'grey';
         };
         
         row.appendChild(space);
@@ -26,11 +26,11 @@ const gameboardDOM = (compBoard, playerBoard, playRound, isGameOver) => {
   const boardKeys = Object.keys(playerBoard.board);
 
   const playerBoardDOM = document.querySelector('.player-board');
-  playerBoardDOM.textContent = 'Player Board';
+  playerBoardDOM.textContent = `${player.name}'s Board`;
   boardSetup(playerBoard.board, playerBoardDOM);
 
   const computerBoardDOM = document.querySelector('.computer-board');
-  computerBoardDOM.textContent = 'Computer Board';
+  computerBoardDOM.textContent = 'Computers Board';
   boardSetup(compBoard.board, computerBoardDOM);
 
   const handleClick = (board, e) => {
