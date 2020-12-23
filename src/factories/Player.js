@@ -1,4 +1,4 @@
-const playerFactory = () => {
+const playerFactory = (name) => {
   const moves = [];
 
   const computerPlay = () => {
@@ -14,6 +14,7 @@ const playerFactory = () => {
   };
 
   return {
+    name: name,
     playedMoves: moves,
     computerPlay: computerPlay
   };
