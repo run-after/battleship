@@ -42,6 +42,52 @@ const gameboard = () => {
     return board;
   };
 
+  const randomlyPlaceShips = (shipArr, board) => {
+    
+    shipArr.forEach(x => {
+      const orientation = Math.floor(Math.random() * 2);
+      
+      let xCoord;
+      let yCoord;
+
+      const checkBoard = () => {
+
+        if (orientation === 0) {
+          xCoord = Math.floor(Math.random() * 6);
+          yCoord = Math.floor(Math.random() * 10) + 1;
+        
+          for (let i = 0; i < x.length; i++) {
+            if (board.board[yCoord][xCoord + i]) {
+              checkBoard();
+            };
+          };
+        } else {
+          xCoord = Math.floor(Math.random() * 9);
+          yCoord = Math.floor(Math.random() * 6) + 1;
+        
+          for (let i = 0; i < x.length; i++) {
+            if (board.board[yCoord + i][xCoord]) {
+              checkBoard();
+            };
+          };
+        };
+
+        return [xCoord, yCoord];
+                  
+      };
+
+      const start = checkBoard();
+      if (orientation === 0) {
+        board.placeShip(x, start, [start[0] + x.length - 1, start[1]]);  
+      } else {
+        board.placeShip(x, start, [start[0], start[1]+ x.length - 1]);  
+      };
+          
+      
+    });
+    
+  };
+
   const receiveAttack = (x, y) => {
 
     if (board[y][x]) {
@@ -64,7 +110,7 @@ const gameboard = () => {
     return ships.map(x => x.isSunk()).every(x => x === true)
   }
 
-  return { board, placeShip, receiveAttack, allShipsSunk };
+  return { board, placeShip, receiveAttack, allShipsSunk, randomlyPlaceShips };
   
 };
 
