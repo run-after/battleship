@@ -1,11 +1,41 @@
+body {
+  background: radial-gradient(
+    circle,
+    rgba(20, 87, 165, 0.7215685590642507) 0%,
+    rgba(84, 129, 214, 1) 91%
+  );
+}
+
 header {
-  background: rgb(58, 58, 185);
+  background: #1457a5;
   height: 50px;
   color: white;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   font-size: 30px;
+}
+
+.title {
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+  justify-self: center;
+}
+
+.btn {
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+  border: none;
+  border-radius: 5px;
+  background: #5482d69d;
+  padding: 5px;
+  justify-self: end;
+  margin-right: 20px;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.2;
 }
 
 main {
@@ -24,6 +54,16 @@ main {
   pointer-events: none;
 }
 
+.player-board,
+.computer-board {
+  background: url("../media/open-sea.jpeg");
+  color: white;
+  text-align: center;
+  font-size: 1.5em;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .row {
   display: flex;
 }
@@ -31,12 +71,13 @@ main {
 .space {
   height: 50px;
   width: 50px;
-  border: 1px solid black;
+  border: 1px solid white;
   padding: 0 1px;
   margin: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0.75;
 }
 
 .hit {
@@ -65,5 +106,12 @@ main {
   }
   .player-board {
     margin: 20px auto;
+  }
+}
+
+@media (max-width: 590px) {
+  .space {
+    height: 30px;
+    width: 30px;
   }
 }
