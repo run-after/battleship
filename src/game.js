@@ -5,7 +5,8 @@ import playerFactory from './factories/Player';
 
 const Game = () => {
 
-  const player = playerFactory();
+  const playerName = prompt("What's your name?") || 'Player';
+  const player = playerFactory(playerName);
   const playerBoard = Gameboard();
   const playerShips = [
     shipFactory(5), //carrier
@@ -16,7 +17,7 @@ const Game = () => {
   ];
   playerBoard.randomlyPlaceShips(playerShips, playerBoard);
 
-  const computerPlayer = playerFactory();
+  const computerPlayer = playerFactory('Computer');
   const compBoard = Gameboard();
   const compShips = [
     shipFactory(5), //carrier
@@ -47,11 +48,12 @@ const Game = () => {
     return `${x},${y}`;
   };
   
-  gameboardDOM(compBoard, playerBoard, playRound, isGameOver);
+  gameboardDOM(compBoard, playerBoard, player, playRound, isGameOver);
   
 };
 
 export default Game;
 
 // Need to implement drag and drop for player ships
-// Need a way to start new game
+// Would be cool to turn all boxes containing ship
+// red if sunk
