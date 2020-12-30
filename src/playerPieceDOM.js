@@ -9,6 +9,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
     instructions.textContent = 'Place your ships';
     playerBoardDOM.appendChild(instructions);
     const orientBtn = document.createElement('button');
+    orientBtn.classList.add('orientation-btn');
     orientBtn.textContent = 'orientation';
     playerBoardDOM.appendChild(orientBtn);
 
@@ -44,7 +45,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
   
   const playerBoardDOM = document.querySelector('.player-board');
   boardSetup(playerBoard.board, playerBoardDOM);
-  
+
   const areSpacesEmpty = (start, end, length) => {
     const startX = start[0];
     const startY = start[1];

@@ -25,7 +25,7 @@ header {
 .btn {
   grid-row: 1/-1;
   grid-column: 1/-1;
-  border: none;
+  border: 1px solid white;
   border-radius: 5px;
   background: #5482d69d;
   padding: 5px;
@@ -35,7 +35,20 @@ header {
 }
 
 .btn:hover {
-  opacity: 0.2;
+  border: 1px solid red;
+}
+
+.orientation-btn {
+  border: 1px solid white;
+  border-radius: 5px;
+  background: #5482d69d;
+  padding: 5px;
+  color: white;
+  margin: 10px 0;
+}
+
+.orientation-btn:hover {
+  border: 1px solid red;
 }
 
 main {
