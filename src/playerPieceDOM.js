@@ -1,4 +1,4 @@
-import gameboardDOM from './gameboardDOM';;
+import gameboardDOM from './gameboardDOM';
 
 const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, isGameOver) => {
   
@@ -6,7 +6,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
   const boardSetup = (board, boardDOM) => {
 
     const instructions = document.createElement('p');
-    instructions.textContent = 'Place your ships';
+    instructions.textContent = `Place your ships, ${player.name}`;
     playerBoardDOM.appendChild(instructions);
     const orientBtn = document.createElement('button');
     orientBtn.classList.add('orientation-btn');
@@ -49,8 +49,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
   const areSpacesEmpty = (start, end, length) => {
     const startX = start[0];
     const startY = start[1];
-    const endX = end[0];
-    const endY = end[1];
+    
     if (orientation === 'x') {
       for (let i = 0; i < length; i++) {
         if (playerBoard.board[startY][Number(startX) + i]) {
@@ -70,7 +69,6 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
     
   // picks first ship from playerShips array passed in from game
   let currentShip = playerShips.shift();
-  // sets length to first ships length
   let length = currentShip.length;
   let orientation = 'x';
   
@@ -78,17 +76,20 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
   playerBoardDOM.addEventListener('click', (e) => {
     // Only allow click in a space, not inbetween
     if (e.target.classList[0] !== 'space') return;
-
-    // takes coords from dom element data-coord
     const coords = e.target.dataset.coord.split(',');
     
-    /* X ORIENTATION */
     if (orientation === 'x') {
       // find square for last spot of ship
-      const lastShipSquare = document.querySelector(`[data-coord="${Number(coords[0]) + length - 1},${coords[1]}"]`);
+      const lastShipSquare = document.querySelector(
+        `[data-coord="${Number(coords[0]) + length - 1},${coords[1]}"]`
+      );
       // if there is a square for the last spot of a ship and nothing in the squares
-      if (lastShipSquare && areSpacesEmpty(coords, [Number(coords[0]) + length - 1, coords[1]], length)) {
-        // places ship based on ship length and starting coord
+      if (lastShipSquare && areSpacesEmpty(coords,
+                                           [Number(coords[0]) + length - 1,
+                                           coords[1]],
+                                           length)
+      ) {
+
         playerBoard.placeShip(currentShip, coords, [Number(coords[0]) + length - 1, coords[1]]);
 
         // Clear board and render with ships placed
@@ -105,19 +106,22 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
         return;
       }
     } else {
-      /* Y ORIENTATION */
-    
       // find square for last spot of ship
-      const lastShipSquare = document.querySelector(`[data-coord="${coords[0]},${Number(coords[1]) + length - 1}"]`);
+      const lastShipSquare = document.querySelector(
+        `[data-coord="${coords[0]},${Number(coords[1]) + length - 1}"]`
+      );
       // if there is a square for the last spot of a ship and nothing in the squares
-      if (lastShipSquare && areSpacesEmpty(coords, [coords[0], Number(coords[1]) + length - 1], length)) {
-        // places ship based on ship length and starting coord
+      if (lastShipSquare && areSpacesEmpty(coords,
+                                           [coords[0],
+                                           Number(coords[1]) + length - 1],
+                                           length)
+      ) {
+        
         playerBoard.placeShip(currentShip, coords, [coords[0], Number(coords[1]) + length - 1]);
         
         // Clear board and render with ships placed
         playerBoardDOM.innerHTML = '';
         boardSetup(playerBoard.board, playerBoardDOM);
-        
         // add listeners back
         const spaces = document.querySelectorAll('.space');
         spaces.forEach(space => {
@@ -134,9 +138,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
     currentShip = playerShips.shift();
     // checks if any more ships
     if (currentShip) {
-      // if there is a ship, set the length
       length = currentShip.length;
-      // if not, no more hover, get rid of listeners, and display final boards
     } else {
       length = 0;
       //removes listeners
@@ -151,16 +153,19 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
     let square = [];
     if (orientation === 'y') {
       for (let i = 0; i < length; i++) {
-        const shipSquare = document.querySelector(`[data-coord="${orgin[0]},${Number(orgin[1]) + i}"]`);
+        const shipSquare = document.querySelector(
+          `[data-coord="${orgin[0]},${Number(orgin[1]) + i}"]`
+        );
         // check if shipSquare is a sqaure
         if (shipSquare) {
           square.push(shipSquare);
         };
       };
     } else {
-      
       for (let i = 0; i < length; i++) {
-        const shipSquare = document.querySelector(`[data-coord="${Number(orgin[0]) + i},${orgin[1]}"]`)
+        const shipSquare = document.querySelector(
+          `[data-coord="${Number(orgin[0]) + i},${orgin[1]}"]`
+        );
         //check if shipSquare is a square
         if (shipSquare) {
           square.push(shipSquare);
