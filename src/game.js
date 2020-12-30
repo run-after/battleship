@@ -1,11 +1,12 @@
 import Gameboard from './factories/Gameboard';
+import playerPieceDOM from './playerPieceDOM';
 import gameboardDOM from './gameboardDOM';
 import shipFactory from './factories/Ship';
 import playerFactory from './factories/Player';
 
 const Game = () => {
 
-  const playerName = prompt("What's your name?") || 'Player';
+  const playerName = 'x'//prompt("What's your name?") || 'Player';
   const player = playerFactory(playerName);
   const playerBoard = Gameboard();
   const playerShips = [
@@ -15,7 +16,10 @@ const Game = () => {
     shipFactory(3), //sub
     shipFactory(2) //destroyer
   ];
-  playerBoard.randomlyPlaceShips(playerShips, playerBoard);
+  
+  
+  // will change when drag/drop implemented
+  //playerBoard.randomlyPlaceShips(playerShips, playerBoard);
 
   const computerPlayer = playerFactory('Computer');
   const compBoard = Gameboard();
@@ -39,6 +43,7 @@ const Game = () => {
       document.querySelector('.computer-board').classList.add('disable-clicks');
     } else if (playerBoard.allShipsSunk()) {
       alert('Computer wins');
+      document.querySelector('.computer-board').classList.add('disable-clicks');
     };
   
     const play = computerPlayer.computerPlay();
@@ -47,13 +52,14 @@ const Game = () => {
     
     return `${x},${y}`;
   };
-  
-  gameboardDOM(compBoard, playerBoard, player, playRound, isGameOver);
+  playerPieceDOM(compBoard, playerBoard, player, playerShips, playRound, isGameOver);
+  //gameboardDOM(compBoard, playerBoard, player, playRound, isGameOver);
   
 };
 
 export default Game;
 
-// Need to implement drag and drop for player ships
 // Would be cool to turn all boxes containing ship
 // red if sunk
+
+// Add sound to hit?
