@@ -20,14 +20,13 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
         if (boardDOM === playerBoardDOM && x) {
           space.style.background = 'grey';
         };
-        
         row.appendChild(space);
       });
     });
   };
   const boardKeys = Object.keys(playerBoard.board);
   const playerBoardDOM = document.querySelector('.player-board');
-  playerBoardDOM.textContent = 'Place your ships'
+  playerBoardDOM.textContent = 'Place your ships';
   boardSetup(playerBoard.board, playerBoardDOM);
   // Maybe dynamically create player board here and comp board with 
   // gameboardDOM
@@ -36,7 +35,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
   // Will change where button is placed later (not comp board)
   const compBoardDOM = document.querySelector('.computer-board');
   const orientBtn = document.createElement('button');
-  orientBtn.textContent = 'orientation'
+  orientBtn.textContent = 'orientation';
   compBoardDOM.appendChild(orientBtn);
 
   orientBtn.addEventListener('click', () => {
@@ -44,9 +43,9 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
       orientation = 'y';
     } else {
       orientation = 'x';
-    }
-  })
-//////////////// THE ABOVE IS NOT DONE!! //////////////////////
+    };
+  });
+  //////////////// THE ABOVE IS NOT DONE!! //////////////////////
   
   const areSpacesEmpty = (start, end, length) => {
     const startX = start[0];
@@ -54,26 +53,22 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
     const endX = end[0];
     const endY = end[1];
     if (orientation === 'x') {
-      for (let i = 0; i < length; i++){
+      for (let i = 0; i < length; i++) {
         if (playerBoard.board[startY][Number(startX) + i]) {
           return false
-        }
-      }
-      return true
+        };
+      };
+      return true;
     } else {
-      for (let i = 0; i < length; i++){
-        if (playerBoard.board[Number(startY)+i][startX]) {
-          return false
-        }
-      }
-      return true
-    } 
-  }
+      for (let i = 0; i < length; i++) {
+        if (playerBoard.board[Number(startY) + i][startX]) {
+          return false;
+        };
+      };
+      return true;
+    };
+  };
     
-    
-
-
-
   // picks first ship from playerShips array passed in from game
   let currentShip = playerShips.shift();
   // sets length to first ships length
@@ -88,50 +83,60 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
     // takes coords from dom element data-coord
     const coords = e.target.dataset.coord.split(',');
     
-    
-      /* X ORIENTATION */
+    /* X ORIENTATION */
     if (orientation === 'x') {
       // find square for last spot of ship
-      const test = document.querySelector(`[data-coord="${Number(coords[0]) + length-1},${coords[1]}"]`)
+      const lastShipSquare = document.querySelector(`[data-coord="${Number(coords[0]) + length - 1},${coords[1]}"]`);
       // if there is a square for the last spot of a ship and nothing in the squares
-      if (test && areSpacesEmpty(coords, [Number(coords[0]) + length - 1, coords[1]], length)) {
+      if (lastShipSquare && areSpacesEmpty(coords, [Number(coords[0]) + length - 1, coords[1]], length)) {
         // places ship based on ship length and starting coord
-        playerBoard.placeShip(currentShip, coords, [Number(coords[0]) + length - 1, coords[1]])
+        playerBoard.placeShip(currentShip, coords, [Number(coords[0]) + length - 1, coords[1]]);
+
+        // Clear board and render with ships placed
+        playerBoardDOM.innerHTML = 'Place your ships';
+        boardSetup(playerBoard.board, playerBoardDOM);
+        // add listeners back
+        const spaces = document.querySelectorAll('.space');
+        spaces.forEach(space => {
+          space.addEventListener('mouseenter', hover);
+          space.addEventListener('mouseleave', leave);
+        });
         // else do nothing
       } else {
-        return
-      }  
+        return;
+      }
     } else {
       /* Y ORIENTATION */
     
       // find square for last spot of ship
-      const test = document.querySelector(`[data-coord="${coords[0]},${Number(coords[1])+ length -1}"]`)
+      const lastShipSquare = document.querySelector(`[data-coord="${coords[0]},${Number(coords[1]) + length - 1}"]`);
       // if there is a square for the last spot of a ship and nothing in the squares
-      if (test && areSpacesEmpty(coords, [coords[0], Number(coords[1])+length-1], length)) {
+      if (lastShipSquare && areSpacesEmpty(coords, [coords[0], Number(coords[1]) + length - 1], length)) {
         // places ship based on ship length and starting coord
-        playerBoard.placeShip(currentShip, coords, [coords[0], Number(coords[1])+length-1])
+        playerBoard.placeShip(currentShip, coords, [coords[0], Number(coords[1]) + length - 1]);
+        
+        // Clear board and render with ships placed
+        playerBoardDOM.innerHTML = 'Place your ships';
+        boardSetup(playerBoard.board, playerBoardDOM);
+        
+        // add listeners back
+        const spaces = document.querySelectorAll('.space');
+        spaces.forEach(space => {
+          space.addEventListener('mouseenter', hover);
+          space.addEventListener('mouseleave', leave);
+        });
         // else do nothing
       } else {
-        return
-      }
-    }
-     
-  
-    
-    
-    
-    
-    
-    
-    
-    
+        return;
+      };
+    };
     
     //takes next ship from playerShip array passed in
     currentShip = playerShips.shift();
     // checks if any more ships
     if (currentShip) {
       // if there is a ship, set the length
-      length = currentShip.length; 
+      length = currentShip.length;
       // if not, no more hover, get rid of listeners, and display final boards
     } else {
       length = 0;
@@ -139,85 +144,61 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
       playerBoardDOM.replaceWith(playerBoardDOM.cloneNode(true));
       // display gameboard
       gameboardDOM(compBoard, playerBoard, player, playRound, isGameOver);
-    }
-    
-    
-  })
-
+    };
+  });
 
   const hover = (e) => {
-    //const length = 5;
-    //const orientation = 'x';
     const orgin = e.target.dataset.coord.split(',');
     let square = [];
     if (orientation === 'y') {
       for (let i = 0; i < length; i++) {
-        const test = document.querySelector(`[data-coord="${orgin[0]},${Number(orgin[1]) + i}"]`)
-        // check if test is a sqaure
-        if (test) {
-          square.push(test);
-        }
-      }
+        const shipSquare = document.querySelector(`[data-coord="${orgin[0]},${Number(orgin[1]) + i}"]`);
+        // check if shipSquare is a sqaure
+        if (shipSquare) {
+          square.push(shipSquare);
+        };
+      };
     } else {
       
       for (let i = 0; i < length; i++) {
-        const test = document.querySelector(`[data-coord="${Number(orgin[0]) + i},${orgin[1]}"]`)
-        //check if test is a square
-        if (test) {
-          square.push(test);
-        }
-      }
-    }
-    square.forEach(x => { x.style.background = 'red' });
-  }
+        const shipSquare = document.querySelector(`[data-coord="${Number(orgin[0]) + i},${orgin[1]}"]`)
+        //check if shipSquare is a square
+        if (shipSquare) {
+          square.push(shipSquare);
+        };
+      };
+    };
+    square.forEach(x => { x.style.border = '1px solid red' });
+  };
 
   const leave = (e) => {
-    //const length = 5;
-    //const orientation = 'x';
     const orgin = e.target.dataset.coord.split(',');
     let square = [];
     if (orientation === 'y') {
       for (let i = 0; i < length; i++) {
-        const test = document.querySelector(`[data-coord="${orgin[0]},${Number(orgin[1]) + i}"]`)
-        // check if test is a sqaure
-        if (test) {
-          square.push(test);
-        }
-      }
+        const shipSquare = document.querySelector(`[data-coord="${orgin[0]},${Number(orgin[1]) + i}"]`);
+        // check if shipSquare is a sqaure
+        if (shipSquare) {
+          square.push(shipSquare);
+        };
+      };
     } else {
       for (let i = 0; i < length; i++) {
-        const test = document.querySelector(`[data-coord="${Number(orgin[0]) + i},${orgin[1]}"]`)
-        // check if test is a sqaure
-        if (test) {
-          square.push(test);
-        }
-      }
-    }
-    square.forEach(x=>{x.removeAttribute('style')})
-    
-  }
+        const shipSquare = document.querySelector(`[data-coord="${Number(orgin[0]) + i},${orgin[1]}"]`);
+        // check if shipSquare is a sqaure
+        if (shipSquare) {
+          square.push(shipSquare);
+        };
+      };
+    };
+    square.forEach(x => { x.style.border = '1px solid white' });
+  };
 
   const spaces = document.querySelectorAll('.space');
-  
-
   spaces.forEach(space => {
     space.addEventListener('mouseenter', hover);
     space.addEventListener('mouseleave', leave);
-  })
-
-}
+  });
+};
 
 export default playerPieceDOM;
-
-
-/*
-Player board comes up and allows user to place ships. 
-Allows player to switch orientation while placing ships.
-Won't allow user to place ships where they run off of board.
-Won't allow user to place ships where they hit another ship.
-
-When placing ships, I don't know where they are until gameboardDOM renders
-
-
-
-*/
