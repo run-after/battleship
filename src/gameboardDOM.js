@@ -29,9 +29,8 @@ const gameboardDOM = (compBoard, playerBoard, player, playRound, isGameOver) => 
   playerBoardDOM.textContent = `${player.name}'s Board`;
   boardSetup(playerBoard.board, playerBoardDOM);
 
-  playerBoardDOM.classList.add('disable-clicks');// don't allow player to attack own board
+  playerBoardDOM.classList.add('disable-clicks');
   
-  // Create computer board DOM element and add it.
   const arena = document.querySelector('.arena');
   const computerBoardDOM = document.createElement('div');
   computerBoardDOM.classList.add('computer-board');
@@ -67,7 +66,9 @@ const gameboardDOM = (compBoard, playerBoard, player, playRound, isGameOver) => 
   computerBoardDOM.addEventListener('click', (e) => {
     const result = handleClick(compBoard, e);
     const compMove = playRound().split(',');
-    let square = playerBoardDOM.querySelector(`[data-coord='${compMove[0]},${compMove[1]}']`);
+    let square = playerBoardDOM.querySelector(
+      `[data-coord='${compMove[0]},${compMove[1]}']`
+    );
 
     if(result && !isGameOver()) {
       setTimeout(()=>square.click(), 500);  
