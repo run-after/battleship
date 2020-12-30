@@ -30,13 +30,12 @@ const gameboardDOM = (compBoard, playerBoard, player, playRound, isGameOver) => 
   boardSetup(playerBoard.board, playerBoardDOM);
 
   playerBoardDOM.classList.add('disable-clicks');// don't allow player to attack own board
-
+  
+  // Create computer board DOM element and add it.
   const arena = document.querySelector('.arena');
   const computerBoardDOM = document.createElement('div');
   computerBoardDOM.classList.add('computer-board');
   arena.appendChild(computerBoardDOM);
-
-  //const computerBoardDOM = document.querySelector('.computer-board');
   computerBoardDOM.textContent = 'Computers Board';
   boardSetup(compBoard.board, computerBoardDOM);
 
