@@ -1,12 +1,11 @@
 import Gameboard from './factories/Gameboard';
 import playerPieceDOM from './playerPieceDOM';
-import gameboardDOM from './gameboardDOM';
 import shipFactory from './factories/Ship';
 import playerFactory from './factories/Player';
 
 const Game = () => {
 
-  const playerName = 'x'//prompt("What's your name?") || 'Player';
+  const playerName = prompt("What's your name?") || 'Player';
   const player = playerFactory(playerName);
   const playerBoard = Gameboard();
   const playerShips = [
@@ -17,10 +16,6 @@ const Game = () => {
     shipFactory(2) //destroyer
   ];
   
-  
-  // will change when drag/drop implemented
-  //playerBoard.randomlyPlaceShips(playerShips, playerBoard);
-
   const computerPlayer = playerFactory('Computer');
   const compBoard = Gameboard();
   const compShips = [
@@ -52,14 +47,7 @@ const Game = () => {
     
     return `${x},${y}`;
   };
-  playerPieceDOM(compBoard, playerBoard, player, playerShips, playRound, isGameOver);
-  //gameboardDOM(compBoard, playerBoard, player, playRound, isGameOver);
-  
+  playerPieceDOM(compBoard, playerBoard, player, playerShips, playRound, isGameOver);  
 };
 
 export default Game;
-
-// Would be cool to turn all boxes containing ship
-// red if sunk
-
-// Add sound to hit?
