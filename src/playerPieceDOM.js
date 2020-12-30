@@ -4,6 +4,22 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
   
   // Initial setup of board
   const boardSetup = (board, boardDOM) => {
+
+    const instructions = document.createElement('p');
+    instructions.textContent = 'Place your ships';
+    playerBoardDOM.appendChild(instructions);
+    const orientBtn = document.createElement('button');
+    orientBtn.textContent = 'orientation';
+    playerBoardDOM.appendChild(orientBtn);
+
+    orientBtn.addEventListener('click', () => {
+      if (orientation === 'x') {
+        orientation = 'y';
+      } else {
+        orientation = 'x';
+      };
+    });
+
     // loop through whole array
     boardKeys.map(key => {
       // new row
@@ -25,27 +41,9 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
     });
   };
   const boardKeys = Object.keys(playerBoard.board);
+  
   const playerBoardDOM = document.querySelector('.player-board');
-  playerBoardDOM.textContent = 'Place your ships';
   boardSetup(playerBoard.board, playerBoardDOM);
-  // Maybe dynamically create player board here and comp board with 
-  // gameboardDOM
-  //////////////////////////////////////////////////////////////
-
-  // Will change where button is placed later (not comp board)
-  const compBoardDOM = document.querySelector('.computer-board');
-  const orientBtn = document.createElement('button');
-  orientBtn.textContent = 'orientation';
-  compBoardDOM.appendChild(orientBtn);
-
-  orientBtn.addEventListener('click', () => {
-    if (orientation === 'x') {
-      orientation = 'y';
-    } else {
-      orientation = 'x';
-    };
-  });
-  //////////////// THE ABOVE IS NOT DONE!! //////////////////////
   
   const areSpacesEmpty = (start, end, length) => {
     const startX = start[0];
@@ -93,7 +91,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
         playerBoard.placeShip(currentShip, coords, [Number(coords[0]) + length - 1, coords[1]]);
 
         // Clear board and render with ships placed
-        playerBoardDOM.innerHTML = 'Place your ships';
+        playerBoardDOM.innerHTML = '';
         boardSetup(playerBoard.board, playerBoardDOM);
         // add listeners back
         const spaces = document.querySelectorAll('.space');
@@ -116,7 +114,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
         playerBoard.placeShip(currentShip, coords, [coords[0], Number(coords[1]) + length - 1]);
         
         // Clear board and render with ships placed
-        playerBoardDOM.innerHTML = 'Place your ships';
+        playerBoardDOM.innerHTML = '';
         boardSetup(playerBoard.board, playerBoardDOM);
         
         // add listeners back
