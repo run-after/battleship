@@ -102,7 +102,7 @@ main {
     flex-direction: column;
   }
   .computer-board {
-    margin: 0 auto;
+    margin: 20px auto;
   }
   .player-board {
     margin: 20px auto;
