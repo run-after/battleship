@@ -1,15 +1,42 @@
 import gameboardDOM from './gameboardDOM';
 
 const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, isGameOver) => {
+
+  const playerBoardDOM = document.querySelector('.player-board');
+
+  const arena = document.querySelector('main');
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+  const nameInput = document.createElement('input');
+  nameInput.placeholder = 'Enter your name';
+  const nameSubmit = document.createElement('button');
+  nameSubmit.textContent = 'Submit';
+  nameSubmit.classList.add('btn');
+  modal.appendChild(nameInput);
+  modal.appendChild(nameSubmit);
+  arena.appendChild(modal);
+
+  nameSubmit.addEventListener('click', () => {
+    player.name = nameInput.value;
+    boardSetup(playerBoard.board, playerBoardDOM);
+    const spaces = document.querySelectorAll('.space');
+    spaces.forEach(space => {
+      space.addEventListener('mouseenter', hover);
+      space.addEventListener('mouseleave', leave);
+    });
+    modal.classList.add('hide');
+  })
+  
   
   // Initial setup of board
   const boardSetup = (board, boardDOM) => {
 
     const instructions = document.createElement('p');
-    instructions.textContent = `Place your ships, ${player.name}`;
+    instructions.textContent = `Place your ships, ${player.name|| 'Player'}`;
     playerBoardDOM.appendChild(instructions);
     const orientBtn = document.createElement('button');
     orientBtn.classList.add('orientation-btn');
+    orientBtn.classList.add('btn');
     orientBtn.textContent = 'orientation';
     playerBoardDOM.appendChild(orientBtn);
 
@@ -43,8 +70,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
   };
   const boardKeys = Object.keys(playerBoard.board);
   
-  const playerBoardDOM = document.querySelector('.player-board');
-  boardSetup(playerBoard.board, playerBoardDOM);
+  
 
   const areSpacesEmpty = (start, end, length) => {
     const startX = start[0];
@@ -198,11 +224,7 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
     square.forEach(x => { x.style.border = '1px solid white' });
   };
 
-  const spaces = document.querySelectorAll('.space');
-  spaces.forEach(space => {
-    space.addEventListener('mouseenter', hover);
-    space.addEventListener('mouseleave', leave);
-  });
+  
 };
 
 export default playerPieceDOM;

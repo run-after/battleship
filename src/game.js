@@ -5,8 +5,7 @@ import playerFactory from './factories/Player';
 
 const Game = () => {
 
-  const playerName = prompt("What's your name?") || 'Player';
-  const player = playerFactory(playerName);
+  const player = playerFactory('playerName');
   const playerBoard = Gameboard();
   const playerShips = [
     shipFactory(5), //carrier
@@ -32,12 +31,14 @@ const Game = () => {
   };
   
   const playRound = () => {
-    
+    const modal = document.querySelector('.modal');
     if (compBoard.allShipsSunk()) {
-      alert('Player wins');
+      modal.innerHTML = 'Player Wins!'
+      modal.classList.remove('hide');
       document.querySelector('.computer-board').classList.add('disable-clicks');
     } else if (playerBoard.allShipsSunk()) {
-      alert('Computer wins');
+      modal.innerHTML = 'Computer Wins!'
+      modal.classList.remove('hide');
       document.querySelector('.computer-board').classList.add('disable-clicks');
     };
   
