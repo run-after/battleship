@@ -96,7 +96,7 @@ main {
   align-content: center;
   height: 50%;
   width: 50%;
-  position: absolute;
+  position: fixed;
   background: #1458a5b6;
   margin: auto auto;
   -webkit-box-orient: vertical;
