@@ -9,12 +9,14 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
   modal.classList.add('modal');
   const nameInput = document.createElement('input');
   nameInput.placeholder = 'Enter your name';
+  
   const nameSubmit = document.createElement('button');
   nameSubmit.textContent = 'Submit';
   nameSubmit.classList.add('btn');
   modal.appendChild(nameInput);
   modal.appendChild(nameSubmit);
   arena.appendChild(modal);
+  nameInput.focus();
 
   nameSubmit.addEventListener('click', () => {
     player.name = nameInput.value;
@@ -25,7 +27,11 @@ const playerPieceDOM = (compBoard, playerBoard, player, playerShips, playRound, 
       space.addEventListener('mouseleave', leave);
     });
     modal.classList.add('hide');
-  })
+  });
+
+  document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') nameSubmit.click();
+  });
   
   
   // Initial setup of board
